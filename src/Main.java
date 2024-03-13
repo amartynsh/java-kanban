@@ -11,8 +11,8 @@ public class Main {
         // распечатаем список тасков
         System.out.println(taskManager.getAllTask());
 //Изменяем первый таск
-        taskManager.updateTask(task1.getId(),new Task("Обновление работы  2", "но еще поработай",
-                Status.IN_PROGRESS));
+        taskManager.updateTask(new Task("Обновление работы  1", "но еще поработай",
+                Status.IN_PROGRESS,task1.getId()));
         //Проверяем
         System.out.println(taskManager.getAllTask());
 //создаем два эпика
@@ -21,14 +21,14 @@ public class Main {
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
 //Создаем сабтаски для первого эпика
-        SubTask subTask1 = new SubTask("Сабтаск1 на эпик 1", "Работа плохо проработана, поработай");
-        SubTask subTask2 = new SubTask("Сабтаск2 на эпик 1", "Неплохо, неплохо... но еще поработай");
-        taskManager.addSubTask(epic1.getId(),subTask1);
-        taskManager.addSubTask(epic1.getId(),subTask2);
+        SubTask subTask1 = new SubTask("Сабтаск1 на эпик 1", "Работа плохо проработана, поработай", epic1.getId());
+        SubTask subTask2 = new SubTask("Сабтаск2 на эпик 1", "Неплохо, неплохо... но еще поработай", epic1.getId());
+        taskManager.addSubTask(subTask1);
+        taskManager.addSubTask(subTask2);
 
         // Создаем сабтаск для второго эпика
-        SubTask subTask3 = new SubTask("Сабтаск1 на эпик 2", "Нужно очень многоработать");
-        taskManager.addSubTask(epic2.getId(),subTask3);
+        SubTask subTask3 = new SubTask("Сабтаск1 на эпик 2", "Нужно очень многоработать", epic2.getId());
+        taskManager.addSubTask(subTask3);
 
         //Печатаем список сабтасков первого эпика
         System.out.println("смотри список сабтасков у эпика 1" + taskManager.getEpicSubtasks(epic1.getId()));
@@ -36,7 +36,7 @@ public class Main {
         // Меняем состояние первого сабтаска первого эпика на IN_PROGRESS
         SubTask subTask4 = new SubTask("ИЗМЕНЕНИЕ", "Неплохо...", Status.IN_PROGRESS,subTask1.getId(),
                 epic1.getId() );
-        taskManager.updateSubTask(subTask1.getId(), subTask4);
+        taskManager.updateSubTask(subTask4);
 
         //Изменяем все сабтаски первого эпика на DONE
         SubTask subTask5 = new SubTask("ИЗМЕНЕНИЕ", "Неплохо...", Status.DONE,subTask1.getId(),
@@ -44,8 +44,8 @@ public class Main {
         SubTask subTask6 = new SubTask("ИЗМЕНЕНИЕ2", "...", Status.DONE, subTask2.getId(),
                 epic1.getId() );
 
-        taskManager.updateSubTask(subTask1.getId(), subTask5);
-        taskManager.updateSubTask(subTask2.getId(), subTask6);
+        taskManager.updateSubTask(subTask5);
+        taskManager.updateSubTask(subTask6);
         System.out.println("смотрим НВОЫЙ список сабтасков у эпика 1" + taskManager.getEpicSubtasks(epic1.getId()));
 
         //удаляем ТАСК 1
@@ -55,7 +55,7 @@ public class Main {
         taskManager.dellEpicById(epic2.getId());
 
         //Удаляем сабтаск эпика 2
-        taskManager.dellSubTaskById(subTask3.getId());
+        taskManager.dellSubTaskById(subTask6.getId());
 
     }
 }
