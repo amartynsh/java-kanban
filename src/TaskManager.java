@@ -26,6 +26,7 @@ public class TaskManager {
         int tempId = changeIdCounter();
         subTask.setId(tempId);
         subTasks.put(tempId, subTask);
+        updateEpicStatus(subTask);
     }
 
     public void updateSubTask(SubTask subTask) {
@@ -60,10 +61,10 @@ public class TaskManager {
         //устанавливаем статус эпика по результатам подсчета
         if (forEpicSubTaskNumber == numberSubTaskDone && forEpicSubTaskNumber > 0) {
             epics.get(idEpic).setStatus(Status.DONE);
-        } else if (numberSubTaskNew == forEpicSubTaskNumber) {
+        } else if (forEpicSubTaskNumber == numberSubTaskNew ) {
             epics.get(idEpic).setStatus(Status.NEW);
-        } else if (numberSubTaskInProgress > 0) {
-            epics.get(subTask.getEpicId()).setStatus(Status.IN_PROGRESS);
+        } else  {
+            epics.get(idEpic).setStatus(Status.IN_PROGRESS);
         }
     }
 
