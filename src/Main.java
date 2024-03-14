@@ -20,6 +20,7 @@ public class Main {
         Epic epic2 = new Epic("Не очень большая работа 2", "Эту работу можно поделить на 1 подзадачу");
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
+
 //Создаем сабтаски для первого эпика
         SubTask subTask1 = new SubTask("Сабтаск1 на эпик 1", "Работа плохо проработана, поработай",
                 epic1.getId());
