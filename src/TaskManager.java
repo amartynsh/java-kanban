@@ -58,7 +58,7 @@ public class TaskManager {
         }
 
         //устанавливаем статус эпика по результатам подсчета
-        if (forEpicSubTaskNumber == numberSubTaskDone) {
+        if (forEpicSubTaskNumber == numberSubTaskDone && forEpicSubTaskNumber > 0) {
             epics.get(idEpic).setStatus(Status.DONE);
         } else if (numberSubTaskNew == forEpicSubTaskNumber) {
             epics.get(idEpic).setStatus(Status.NEW);
