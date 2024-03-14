@@ -13,7 +13,6 @@ public class TaskManager {
         int tempId = changeIdCounter();
         task.setId(tempId);
         tasks.put(tempId, task);
-
     }
 
     public void addEpic(Epic epic) {
@@ -30,49 +29,50 @@ public class TaskManager {
     }
 
     public void updateSubTask(SubTask subTask) {
-
         subTasks.put(subTask.id, subTask);
         updateEpicStatus(subTask);
     }
 
-       private void updateEpicStatus(SubTask subTask){
-        //Если статус сабтаска изменился, то ставим статус эпика IN_PROGRESS
-        if (subTask.getStatus().equals(Status.IN_PROGRESS)) {
-            epics.get(subTask.getEpicId()).setStatus(Status.IN_PROGRESS);
-            //Если потавили статус сабтаска DONE, то проверяем остальные сбатаски эпика и если надо меняем его статус
-        } else if (subTask.getStatus().equals(Status.DONE)) {
-            callcEpicStatus(subTask.getEpicId());
-        }
-    }
-    //Обновление эпика
-    public void updateEpic(Epic epic) {
-
-        epics.put(epic.getId(), epic);
-    }
-    //Метод для проверки и изменения статуса эпика на DONE
-    public void callcEpicStatus(int idEpic) {
+    private void updateEpicStatus(SubTask subTask) {
+        int idEpic = subTask.getEpicId();
         int numberSubTaskDone = 0;
         int forEpicSubTaskNumber = 0;
         int numberSubTaskNew = 0;
+        int numberSubTaskInProgress = 0;
+
+        //считаем количество сабтасков у эпика с разным статусом
         for (SubTask subTaskForCheck : subTasks.values()) {
             if (subTaskForCheck.getEpicId() == idEpic) {
                 forEpicSubTaskNumber = forEpicSubTaskNumber + 1;
-                if (subTaskForCheck.getStatus().equals(Status.DONE) && subTaskForCheck.getEpicId() == idEpic) {
-                    numberSubTaskDone = numberSubTaskDone + 1;
-                    if (forEpicSubTaskNumber == numberSubTaskDone) {
-                        epics.get(idEpic).setStatus(Status.DONE);
-                        if (subTaskForCheck.getStatus().equals(Status.NEW) && subTaskForCheck.getEpicId() == idEpic){
-                            numberSubTaskNew = numberSubTaskNew +1;
-                            if (numberSubTaskNew == forEpicSubTaskNumber ){
-                                epics.get(idEpic).setStatus(Status.NEW);
-                            }
-                        }
-                    }
-                }
+            }
+            if (subTaskForCheck.getStatus().equals(Status.DONE) && subTaskForCheck.getEpicId() == idEpic) {
+                numberSubTaskDone = numberSubTaskDone + 1;
+            }
+            if (subTaskForCheck.getStatus().equals(Status.NEW) && subTaskForCheck.getEpicId() == idEpic) {
+                numberSubTaskNew = numberSubTaskNew + 1;
+            }
+            if (subTaskForCheck.getStatus().equals(Status.IN_PROGRESS) && subTaskForCheck.getEpicId() ==
+                    idEpic) {
+                numberSubTaskInProgress = numberSubTaskInProgress + 1;
             }
         }
+
+        //устанавливаем статус эпика по результатам подсчета
+        if (forEpicSubTaskNumber == numberSubTaskDone) {
+            epics.get(idEpic).setStatus(Status.DONE);
+        } else if (numberSubTaskNew == forEpicSubTaskNumber) {
+            epics.get(idEpic).setStatus(Status.NEW);
+        } else if (numberSubTaskInProgress > 0) {
+            epics.get(subTask.getEpicId()).setStatus(Status.IN_PROGRESS);
+        }
     }
-//Получение всех сабтасков по ID эпика
+
+    //Обновление эпика
+    public void updateEpic(Epic epic) {
+        epics.put(epic.getId(), epic);
+    }
+
+    //Получение всех сабтасков по ID эпика
     public ArrayList<SubTask> getEpicSubtasks(int id) {
         ArrayList<SubTask> subTaskList = new ArrayList<>();
 
@@ -86,7 +86,6 @@ public class TaskManager {
 
     //изменение ID. ID единый для всех типов задач
     private int changeIdCounter() {
-
         return totalTasks++;
     }
 
@@ -106,7 +105,6 @@ public class TaskManager {
     }
 
     public void updateTask(Task task) {
-
         tasks.put(task.getId(), task);
     }
 
@@ -117,39 +115,41 @@ public class TaskManager {
         }
         return tasksList;
     }
+
     public Epic getEpicById(int idEpic) {
         Epic epic = epics.get(idEpic);
         return epic;
     }
 
     public void dellEpicById(int idEpic) {
-       for (SubTask subtask: subTasks.values()) {
-           if (subtask.epicId == idEpic){
-               subTasks.remove(subtask.id);
-           }
-       }
+        for (SubTask subtask : subTasks.values()) {
+            if (subtask.getEpicId() == idEpic) {
+                subTasks.remove(subtask.getId());
+            }
+        }
         epics.remove(idEpic);
         System.out.println("Удалили EPIC id=" + idEpic + " а так же все его сабтаски");
 
     }
+
     public void dellAllEpics() {
         epics.clear();
         subTasks.clear();
         System.out.println("Список эпиков и сабтасков очищен");
     }
 
-    public SubTask getSubTaskById (int idSubTask) {
+    public SubTask getSubTaskById(int idSubTask) {
         SubTask subTask = subTasks.get(idSubTask);
         return subTask;
     }
 
     public void dellSubTaskById(int idSubTask) {
         SubTask tempSubTask = subTasks.get(idSubTask);
-        int idEpic = tempSubTask.getEpicId();
         subTasks.remove(idSubTask);
-        callcEpicStatus(idEpic);
+        updateEpicStatus(tempSubTask);
         System.out.println("Удалили Subtask id=" + idSubTask);
     }
+
     public void dellAllSubTasks() {
         subTasks.clear();
         System.out.println("Список сабтасков очищен");
