@@ -1,8 +1,14 @@
+package model;
+
+import constants.Status;
+
+import java.util.Objects;
+
 public class Task {
     protected String name;
     protected String description;
 
-    protected int id;
+    public int id;
     protected Status status;
 
     public Task(String name, String description) {
@@ -62,6 +68,28 @@ public class Task {
                 "', name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}';
+                '}' + '\n';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) &&
+                status == task.status;
+    }
+
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        Integer newid = id;
+
+        if (newid != null) {
+            hash = hash + name.hashCode() + description.hashCode() + status.hashCode() +
+                    newid.hashCode();
+        }
+       return hash * 31;
     }
 }

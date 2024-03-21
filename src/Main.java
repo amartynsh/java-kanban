@@ -1,18 +1,28 @@
+import model.Epic;
+import constants.Status;
+import model.SubTask;
+import model.Task;
+import service.Managers;
+import service.TaskManager;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
+        //Печатаем пустую историю просмотра
+        System.out.println("ПЕЧАТАЕМ ИСТОРИЮ ПРОСМОТРА " + taskManager.getHistory());
+
         Task task1 = new Task("Доработать работу 1", "Работа плохо проработана, поработай");
         Task task2 = new Task("Переработать работу 2", "Неплохо, неплохо... но еще поработай");
         taskManager.addTask(task1);
         taskManager.addTask(task2);
 
         // распечатаем список тасков
-        System.out.println(taskManager.getAllTask());
+        System.out.println("ПЕЧАТАЕМ СПИСОК ТАСОК " + taskManager.getAllTask());
 //Изменяем первый таск
         taskManager.updateTask(new Task("Обновление работы  1", "но еще поработай",
-                Status.IN_PROGRESS, task1.getId()));
+          Status.IN_PROGRESS, task1.getId()));
         //Проверяем
         System.out.println(taskManager.getAllTask());
 //создаем два эпика
@@ -33,6 +43,9 @@ public class Main {
         SubTask subTask3 = new SubTask("Сабтаск1 на эпик 2", "Нужно очень многоработать",
                 epic2.getId());
         taskManager.addSubTask(subTask3);
+        SubTask subTask10 = new SubTask("Сабтаск2 на эпик 2", "Нужно очень многоработать",
+                epic2.getId());
+        taskManager.addSubTask(subTask10);
 
         //Печатаем список сабтасков первого эпика
         System.out.println("смотри список сабтасков у эпика 1" + taskManager.getEpicSubtasks(epic1.getId()));
@@ -43,6 +56,13 @@ public class Main {
         taskManager.updateSubTask(subTask4);
 
         System.out.println("смотрим НВОЫЙ статус у эпика 1 (должен быть IN_PROGRESS) = " + epic1.getStatus());
+        System.out.println("СПИСОК ВСЕХ ЭПИКОВ" + taskManager.getAllEpics());
+        //Запрашиваем по ID для того, что бы наполнить историю просмотров
+        taskManager.getTaskById(task1.getId());
+        taskManager.getTaskById(task2.getId());
+        taskManager.getEpicById(epic1.getId());
+        taskManager.getSubTaskById(subTask1.getId());
+
 
         //Изменяем все сабтаски первого эпика на DONE
         SubTask subTask5 = new SubTask("ИЗМЕНЕНИЕ", "Неплохо...", Status.DONE, subTask1.getId(),
@@ -57,11 +77,15 @@ public class Main {
         //удаляем ТАСК 1
         taskManager.delTaskById(task1.getId());
 
+        System.out.println("провекра 2 эпика перед удалением: " + taskManager.getEpicSubtasks(epic2.getId()));
+
         //Удаляем EPIC 2
         taskManager.dellEpicById(epic2.getId());
 
         //Удаляем сабтаск эпика 2
         taskManager.dellSubTaskById(subTask6.getId());
+
+        System.out.println("ПЕЧАТАЕМ ИСТОРИЮ ПРОСМОТРА " + taskManager.getHistory());
 
     }
 }
