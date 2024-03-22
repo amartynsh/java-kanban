@@ -8,7 +8,7 @@ public class Task {
     protected String name;
     protected String description;
 
-    public int id;
+    protected int id;
     protected Status status;
 
     public Task(String name, String description) {

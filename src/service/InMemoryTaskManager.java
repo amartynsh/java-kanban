@@ -1,22 +1,19 @@
 package service;
 
+import java.util.Map;
 import model.Epic;
 import constants.Status;
 import model.SubTask;
 import model.Task;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     public int totalTasks;
-    HashMap<Integer, Task> tasks;
-
-    HashMap<Integer, Epic> epics;
-
-    HashMap<Integer, SubTask> subTasks;
-
+    Map<Integer, Task> tasks;
+    Map<Integer, Epic> epics;
+    Map<Integer, SubTask> subTasks;
     HistoryManager historyManager;
 
     InMemoryTaskManager() {
@@ -26,7 +23,6 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks = new HashMap<>();
         historyManager = Managers.getDefaultHistory();
     }
-
 
     @Override
     public void addTask(Task task) {
@@ -89,7 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubTask(SubTask subTask) {
-        subTasks.put(subTask.id, subTask);
+        subTasks.put(subTask.getId(), subTask);
         updateEpicStatus(subTask.getEpicId());
     }
 
@@ -128,7 +124,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.add(task);
         return task;
     }
-
 
     @Override
     public Epic getEpicById(int idEpic) {
@@ -172,7 +167,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (tasks.isEmpty()) {
             System.out.println("Список задач пуст");
             return new ArrayList<>(tasks.values());
-
         }
         return new ArrayList<>(tasks.values());
     }
@@ -209,13 +203,11 @@ public class InMemoryTaskManager implements TaskManager {
                 if (subTask.epicId != idEpic) {
                     newSubTasks.put(subTask.getId(), subTask);
                 }
-
             }
             if (newSubTasks != null) {
                 subTasks = newSubTasks;
             }
-           epics.remove(idEpic);
-
+            epics.remove(idEpic);
         } else {
             System.out.println("Такого эпика нет!");
         }
@@ -232,6 +224,4 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.clear();
         System.out.println("Список задач очищен");
     }
-
-
 }
