@@ -141,12 +141,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getHistory() {
-        return historyManager.getDefaultHistory();
+        return historyManager.getHistory();
     }
 
     @Override
     public List<Epic> getAllEpics() {
-        if (epics.size() == 0) {
+        if (epics.isEmpty()) {
             System.out.println("Список эпиков пуст");
             return new ArrayList<>(epics.values());
         }
@@ -155,7 +155,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<SubTask> getAllSubTasks() {
-        if (epics.size() == 0) {
+        if (epics.isEmpty()) {
             System.out.println("Список сабтасок пуст");
             return new ArrayList<>(subTasks.values());
         }
@@ -198,7 +198,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void dellEpicById(int idEpic) {
         if (epics.containsKey(idEpic)) {
-            HashMap<Integer, SubTask> newSubTasks = new HashMap();
+            HashMap<Integer, SubTask> newSubTasks = new HashMap<>();
             for (SubTask subTask : subTasks.values()) {
                 if (subTask.epicId != idEpic) {
                     newSubTasks.put(subTask.getId(), subTask);

@@ -28,7 +28,7 @@ class ManagersTest {
         taskManager.getTaskById(task1.getId());
 
         //Проверяем наличие созданной таски в истории
-        List<Task> newList = historyManager.getDefaultHistory();
+        List<Task> newList = historyManager.getHistory();
         assertTrue(newList.contains(task1));
 
         //Обновляем таску
@@ -37,7 +37,7 @@ class ManagersTest {
         taskManager.updateTask(task2);
 
         //Обновляем список
-        newList = historyManager.getDefaultHistory();
+        newList = historyManager.getHistory();
 
         //Запрашиваем новую таску
         assertFalse(newList.contains(task2));
@@ -46,7 +46,7 @@ class ManagersTest {
         taskManager.getTaskById(task2.getId());
 
         //Обновляем список
-        newList = historyManager.getDefaultHistory();
+        newList = historyManager.getHistory();
 
         //Запрашиваем новую таску
         assertTrue(newList.contains(task2));
