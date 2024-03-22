@@ -1,6 +1,7 @@
 package service;
 
 import model.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        System.out.println(historyList);
         return List.copyOf(historyList);
     }
 
