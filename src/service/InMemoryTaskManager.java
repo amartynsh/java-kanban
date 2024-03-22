@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    public int totalTasks;
+    private int totalTasks;
     Map<Integer, Task> tasks;
     Map<Integer, Epic> epics;
     Map<Integer, SubTask> subTasks;
@@ -200,7 +200,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epics.containsKey(idEpic)) {
             HashMap<Integer, SubTask> newSubTasks = new HashMap<>();
             for (SubTask subTask : subTasks.values()) {
-                if (subTask.epicId != idEpic) {
+                if (subTask.getEpicId() != idEpic) {
                     newSubTasks.put(subTask.getId(), subTask);
                 }
             }
