@@ -3,12 +3,14 @@ package service;
 import constants.Status;
 import model.*;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
 
-//getById методы проверяются вместе с созданием
+    //getById методы проверяются вместе с созданием
     @Test
     void addTask() {
         //Создаем таскменеджер
@@ -362,7 +364,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void dellAllSubTasks(){
+    void dellAllSubTasks() {
         TaskManager taskManager = Managers.getDefault();
         //создаем и добавляем эпики и сабтаск
         Epic epic1 = new Epic("Новая тестовый эпик", "Описание тестового эпика");
