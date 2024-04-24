@@ -16,7 +16,6 @@ public class Epic extends Task {
     }
 
 
-
     public String toString() {
         return "Epic {" + "id='" + id +
                 "', name='" + name + '\'' +
