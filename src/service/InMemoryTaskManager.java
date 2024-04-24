@@ -183,7 +183,6 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void dellAllSubTasks() {
         subTasks.clear();
-        System.out.println("Список сабтасков очищен");
         for (Epic epic : epics.values()) {
             epics.get(epic.getId()).setStatus(Status.NEW);
         }

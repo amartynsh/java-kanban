@@ -1,5 +1,7 @@
 package service;
+
 import java.util.*;
+
 import model.Task;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -9,6 +11,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     //Последний элемент списка
     private Node tail;
+    //Текущий размер списка
+    int size = 0;
 
     @Override
     public List<Task> getHistory() {
@@ -65,17 +69,17 @@ public class InMemoryHistoryManager implements HistoryManager {
             size--;
         }
     }
-}
 
+    class Node {
+        public Task data;
+        public Node next;
+        public Node prev;
 
-class Node {
-    public Task data;
-    public Node next;
-    public Node prev;
+        public Node(Task task, Node prevNode) {
+            this.data = task;
+            this.prev = prevNode;
+            this.next = null;
 
-    public Node(Task task, Node prevNode) {
-        this.data = task;
-        this.prev = prevNode;
-        this.next = null;
+        }
     }
 }
