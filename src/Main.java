@@ -24,7 +24,7 @@ public class Main {
         System.out.println("ПЕЧАТАЕМ СПИСОК ТАСОК " + taskManager.getAllTask());
 //Изменяем первый таск
         taskManager.updateTask(new Task("Обновление работы  1", "но еще поработай",
-          Status.IN_PROGRESS, task1.getId()));
+                Status.IN_PROGRESS, task1.getId()));
         //Проверяем
         System.out.println(taskManager.getAllTask());
 //создаем два эпика

@@ -1,10 +1,12 @@
 package service;
 
 import java.util.Map;
+
 import model.Epic;
 import constants.Status;
 import model.SubTask;
 import model.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -190,10 +192,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void dellAllEpics() {
-        for (Integer idEpic: epics.keySet()) {
+        for (Integer idEpic : epics.keySet()) {
             historyManager.remove(idEpic);
         }
-        for (Integer idSubTask: subTasks.keySet()) {
+        for (Integer idSubTask : subTasks.keySet()) {
             historyManager.remove(idSubTask);
         }
         epics.clear();
@@ -230,7 +232,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void delAllTask() {
-        for (Integer taskId: tasks.keySet()) {
+        for (Integer taskId : tasks.keySet()) {
             historyManager.remove(taskId);
         }
         tasks.clear();
