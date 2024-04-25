@@ -11,8 +11,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     //Последний элемент списка
     private Node tail;
-    //Текущий размер списка
-    int size = 0;
 
     @Override
     public List<Task> getHistory() {
@@ -46,7 +44,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             tail.prev.next = newNode;
         }
         historyMapList.put(task.getId(), newNode);
-        size++;
     }
 
     @Override
@@ -66,11 +63,11 @@ public class InMemoryHistoryManager implements HistoryManager {
                 node.prev.next = node.next;
                 node.next.prev = node.prev;
             }
-            size--;
+            historyMapList.remove(node.data.getId());
         }
     }
 
-    class Node {
+    private static class Node {
         public Task data;
         public Node next;
         public Node prev;
