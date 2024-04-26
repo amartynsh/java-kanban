@@ -90,6 +90,6 @@ public class Task {
             hash = hash + name.hashCode() + description.hashCode() + status.hashCode() +
                     newid.hashCode();
         }
-       return hash * 31;
+        return hash * 31;
     }
 }

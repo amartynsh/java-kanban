@@ -1,10 +1,12 @@
 package service;
 
 import java.util.Map;
+
 import model.Epic;
 import constants.Status;
 import model.SubTask;
 import model.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -174,6 +176,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void dellSubTaskById(int idSubTask) {
         SubTask tempSubTask = subTasks.get(idSubTask);
+        historyManager.remove(idSubTask);
         subTasks.remove(idSubTask);
         updateEpicStatus(tempSubTask.getEpicId());
         System.out.println("Удалили Subtask id=" + idSubTask);
@@ -182,7 +185,6 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void dellAllSubTasks() {
         subTasks.clear();
-        System.out.println("Список сабтасков очищен");
         for (Epic epic : epics.values()) {
             epics.get(epic.getId()).setStatus(Status.NEW);
         }
@@ -190,6 +192,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void dellAllEpics() {
+        for (Integer idEpic : epics.keySet()) {
+            historyManager.remove(idEpic);
+        }
+        for (Integer idSubTask : subTasks.keySet()) {
+            historyManager.remove(idSubTask);
+        }
         epics.clear();
         subTasks.clear();
         System.out.println("Список эпиков и сабтасков очищен");
@@ -207,7 +215,9 @@ public class InMemoryTaskManager implements TaskManager {
             if (newSubTasks != null) {
                 subTasks = newSubTasks;
             }
+            historyManager.remove(idEpic);
             epics.remove(idEpic);
+
         } else {
             System.out.println("Такого эпика нет!");
         }
@@ -215,12 +225,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void delTaskById(int idTask) {
+        historyManager.remove(idTask);
         tasks.remove(idTask);
         System.out.println("Удалили TASK id=" + idTask);
     }
 
     @Override
     public void delAllTask() {
+        for (Integer taskId : tasks.keySet()) {
+            historyManager.remove(taskId);
+        }
         tasks.clear();
         System.out.println("Список задач очищен");
     }

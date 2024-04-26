@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         TaskManager taskManager = Managers.getDefault();
+
         //Печатаем пустую историю просмотра
         System.out.println("ПЕЧАТАЕМ ИСТОРИЮ ПРОСМОТРА " + taskManager.getHistory());
 
@@ -22,7 +23,7 @@ public class Main {
         System.out.println("ПЕЧАТАЕМ СПИСОК ТАСОК " + taskManager.getAllTask());
 //Изменяем первый таск
         taskManager.updateTask(new Task("Обновление работы  1", "но еще поработай",
-          Status.IN_PROGRESS, task1.getId()));
+                Status.IN_PROGRESS, task1.getId()));
         //Проверяем
         System.out.println(taskManager.getAllTask());
 //создаем два эпика
@@ -38,7 +39,7 @@ public class Main {
                 epic1.getId());
         taskManager.addSubTask(subTask1);
         taskManager.addSubTask(subTask2);
-
+        System.out.println("ПЕЧАТАЕМ ИСТОРИЮ ПРОСМОТРА " + taskManager.getHistory());
         // Создаем сабтаск для второго эпика
         SubTask subTask3 = new SubTask("Сабтаск1 на эпик 2", "Нужно очень многоработать",
                 epic2.getId());

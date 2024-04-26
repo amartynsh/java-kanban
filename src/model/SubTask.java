@@ -2,13 +2,14 @@ package model;
 
 import constants.Status;
 
-public class SubTask extends Task{
+public class SubTask extends Task {
     private int epicId;
 
-    public SubTask(String name, String description, int epicId ) {
+    public SubTask(String name, String description, int epicId) {
         super(name, description);
         this.epicId = epicId;
     }
+
     public SubTask(String name, String description, Status status, int id, int epicId) {
         super(name, description, status, id);
         this.epicId = epicId;
@@ -25,7 +26,7 @@ public class SubTask extends Task{
     @Override
     public String toString() {
         return "subTask{" + "id='" + super.getId() +
-                "', name='" +super.getName() + '\'' +
+                "', name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +
                 ", status=" + super.getStatus() + ", epic=" + getEpicId() +
                 '}' + '\n';
