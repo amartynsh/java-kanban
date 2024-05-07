@@ -3,20 +3,25 @@ package service;
 import constants.Status;
 import manager.Managers;
 import model.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
+public class InMemoryTaskManagerTest {
+
+    TaskManager taskManager;
+
+    @BeforeEach
+    void beforeEach() {
+        taskManager = Managers.getDefault();
+    }
 
     //getById методы проверяются вместе с созданием
     @Test
     void addTask() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем эпик
         Task task = new Task("Новая тестовая задача", "Описание тестовой задачи");
         taskManager.addTask(task);
@@ -37,9 +42,6 @@ class InMemoryTaskManagerTest {
     //Проверяем добавление эпика
     @Test
     void addEpic() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем эпик
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -60,8 +62,6 @@ class InMemoryTaskManagerTest {
     //Проверяем доавление сабтаски
     @Test
     void addSubTask() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
         //создаем и добавляем эпик
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -86,12 +86,8 @@ class InMemoryTaskManagerTest {
         assertEquals(subTask, subTasks.get(0), "Таски не совпадают.");
     }
 
-
     @Test
     void changeIdCounter() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //Создали эпик
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -111,8 +107,6 @@ class InMemoryTaskManagerTest {
     //Начинаем проверят update методы
     @Test
     void updateTask() {
-        TaskManager taskManager = Managers.getDefault();
-
         Task task = new Task("Новая тестовая задача", "Описание тестовой задачи");
         taskManager.addTask(task);
         int taskId = task.getId();
@@ -128,8 +122,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void updateSubTask() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
         //создаем и добавляем эпик
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -157,9 +149,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void updateEpic() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем эпик
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -182,9 +171,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void getAllEpics() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем эпики
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -203,8 +189,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void getAllSubTasks() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
         //создаем и добавляем эпик
         Epic epic = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic);
@@ -228,9 +212,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void getAllTask() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем таски
         Task task1 = new Task("Новая тестовая задача1", "Описание тестовой задачи1");
         Task task2 = new Task("Новая тестовая задача2", "Описание тестовой задачи2");
@@ -251,9 +232,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void delTaskById() {
-        //Создаем таскменеджер
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем таски
         Task task1 = new Task("Новая тестовая задача1", "Описание тестовой задачи1");
         Task task2 = new Task("Новая тестовая задача2", "Описание тестовой задачи2");
@@ -272,7 +250,6 @@ class InMemoryTaskManagerTest {
     //Проверяем удаляемость эпика а так же его сабтасков вместе с ним
     @Test
     void dellEpicById() {
-        TaskManager taskManager = Managers.getDefault();
 
         //создаем и добавляем эпики и сабтаск
         Epic epic1 = new Epic("Новая тестовый эпик", "Описание тестового эпика");
@@ -322,7 +299,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void dellAllEpics() {
-        TaskManager taskManager = Managers.getDefault();
 
         //создаем и добавляем эпики и сабтаск
         Epic epic1 = new Epic("Новая тестовый эпик", "Описание тестового эпика");
@@ -331,7 +307,6 @@ class InMemoryTaskManagerTest {
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
         taskManager.addEpic(epic3);
-
 
         //Удаляем эпики
         taskManager.dellAllEpics();
@@ -342,8 +317,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void dellSubTaskById() {
-        TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем эпики и сабтаск
         Epic epic1 = new Epic("Новая тестовый эпик", "Описание тестового эпика");
 
@@ -366,7 +339,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void dellAllSubTasks() {
-        TaskManager taskManager = Managers.getDefault();
         //создаем и добавляем эпики и сабтаск
         Epic epic1 = new Epic("Новая тестовый эпик", "Описание тестового эпика");
         taskManager.addEpic(epic1);

@@ -4,6 +4,7 @@ import constants.Status;
 import constants.TaskType;
 import model.*;
 import exceptions.ManagerSaveException;
+
 import java.io.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -11,7 +12,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
 
     public FileBackedTaskManager(File file) {
-        super();
         this.file = file;
     }
 
@@ -57,7 +57,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-
     @Override
     public void dellSubTaskById(int idSubTask) {
         super.dellSubTaskById(idSubTask);
@@ -94,7 +93,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-    private void loadBackup() throws ManagerSaveException {
+    private void loadBackup() {
         Task task = null;
         int newId = 0;
 
@@ -114,9 +113,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         subTasks.put(task.getId(), (SubTask) task);
                     } else if (task instanceof Task) {
                         tasks.put(task.getId(), task);
-
                     }
-                    //По ТЗ - Добавляем в историю все таски, что не в состоянии NEW
+                    //По ТЗ - Добавляем в историю просмотра все таски, что не в состоянии NEW
                     if (task.getStatus() == Status.DONE || task.getStatus() == Status.IN_PROGRESS) {
                         historyManager.add(task);
                     }
@@ -124,16 +122,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     line = reader.readLine();
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден.");
         } catch (IOException e) {
-            System.out.println("Произошла ошибка во время чтения файла.");
+            throw new ManagerSaveException("Ошибка чтения файла");
         }
         // Меняем ID последнего таска, чтобы новый создался с +1
-        changeTotalTask(newId);
+        finally {
+            changeTotalTask(newId);
+        }
     }
 
-    String taskToString(Task task) {
+    private String taskToString(Task task) {
         TaskType taskType = TaskType.TASK;
 
         if (task instanceof Epic) {
@@ -163,9 +161,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return taskString;
     }
 
-    public Task fromString(String lineFromFile) {
+    private Task fromString(String lineFromFile) {
         Task task = null;
-        try {
+        if (lineFromFile != null) {
             String[] tasksTemp = lineFromFile.split(",");
             //String name, String description, Status status, int id Конструктор Task
             //Порядок в файле id, type,  name,  description, status
@@ -187,14 +185,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     task = new SubTask(name, description, status, id, epicId);
                     break;
             }
-
-        } catch (NullPointerException nullPointerException) {
-            System.out.println("Пустая таска на вход " + nullPointerException.getMessage());
         }
         return task;
     }
 
-    public void save() {
+    private void save() {
         try (BufferedWriter fileWriterBuffer = new BufferedWriter(new FileWriter(file.getPath()))) {
             //Превращаем пришедшую таску в строку и разбираем ее по запятой
             fileWriterBuffer.write("id,type,name,status,description,epic" + "\n");
