@@ -124,7 +124,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка чтения файла");
-        } finally {// Меняем ID последнего таска, чтобы новый создался с +1
+        } finally {
+            // Меняем ID последнего таска, чтобы новый создался с +1
             changeTotalTask(newId);
         }
     }
