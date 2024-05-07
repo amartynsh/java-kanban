@@ -2,7 +2,7 @@ import model.Epic;
 import constants.Status;
 import model.SubTask;
 import model.Task;
-import service.Managers;
+import manager.Managers;
 import service.TaskManager;
 
 public class Main {
@@ -10,12 +10,11 @@ public class Main {
     public static void main(String[] args) {
 
         TaskManager taskManager = Managers.getDefault();
-
         //Печатаем пустую историю просмотра
         System.out.println("ПЕЧАТАЕМ ИСТОРИЮ ПРОСМОТРА " + taskManager.getHistory());
 
-        Task task1 = new Task("Доработать работу 1", "Работа плохо проработана, поработай");
-        Task task2 = new Task("Переработать работу 2", "Неплохо, неплохо... но еще поработай");
+        Task task1 = new Task("Доработать работу 1", "Работа плохо проработана  поработай");
+        Task task2 = new Task("Переработать работу 2", "Неплохо  неплохо... но еще поработай");
         taskManager.addTask(task1);
         taskManager.addTask(task2);
 
@@ -33,7 +32,7 @@ public class Main {
         taskManager.addEpic(epic2);
 
 //Создаем сабтаски для первого эпика
-        SubTask subTask1 = new SubTask("Сабтаск1 на эпик 1", "Работа плохо проработана, поработай",
+        SubTask subTask1 = new SubTask("Сабтаск1 на эпик 1", "Работа плохо проработана  поработай",
                 epic1.getId());
         SubTask subTask2 = new SubTask("Сабтаск2 на эпик 1", "Неплохо, неплохо... но еще поработай",
                 epic1.getId());

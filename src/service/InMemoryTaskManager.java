@@ -4,6 +4,7 @@ import java.util.Map;
 
 import model.Epic;
 import constants.Status;
+import manager.Managers;
 import model.SubTask;
 import model.Task;
 
@@ -18,7 +19,7 @@ public class InMemoryTaskManager implements TaskManager {
     Map<Integer, SubTask> subTasks;
     HistoryManager historyManager;
 
-    InMemoryTaskManager() {
+    public InMemoryTaskManager() {
         totalTasks = 0;
         tasks = new HashMap<>();
         epics = new HashMap<>();
@@ -237,5 +238,9 @@ public class InMemoryTaskManager implements TaskManager {
         }
         tasks.clear();
         System.out.println("Список задач очищен");
+    }
+
+    protected void changeTotalTask(int newTotal) {
+        totalTasks = newTotal;
     }
 }

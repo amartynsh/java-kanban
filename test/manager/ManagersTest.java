@@ -1,21 +1,20 @@
-package service;
+package manager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import constants.Status;
 import model.Task;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import service.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Collections;
 
 class ManagersTest {
 
     @Test
-    void getDefaultHistory() {
+    void getDefault() {
         TaskManager taskManager = Managers.getDefault();
         assertNotNull(taskManager, "taskManager не создался");
     }
@@ -23,7 +22,6 @@ class ManagersTest {
     @Test
     void notIdenticalTasks() {
         TaskManager taskManager = Managers.getDefault();
-
         //создаем и добавляем таски
         Task task1 = new Task("Новая тестовая задача1", "Описание тестовой задачи1");
         taskManager.addTask(task1);
