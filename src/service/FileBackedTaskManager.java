@@ -14,14 +14,14 @@ import java.time.format.DateTimeFormatter;
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
-    DateTimeFormatter formatter;
+    private DateTimeFormatter formatter;
 
-    public FileBackedTaskManager(File file) throws ManagerSaveException {
+    public FileBackedTaskManager(File file)  {
         this.file = file;
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     }
 
-    public static FileBackedTaskManager loadFromFile(File file) throws ManagerSaveException {
+    public static FileBackedTaskManager loadFromFile(File file)  {
         FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
         taskManager.loadBackup();
         return taskManager;
@@ -99,7 +99,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-    private void loadBackup() throws ManagerSaveException {
+    private void loadBackup() {
         Task task = null;
         int newId = 0;
 

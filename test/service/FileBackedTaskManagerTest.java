@@ -1,7 +1,6 @@
 package service;
 
 import exceptions.ManagerSaveException;
-import manager.Managers;
 import model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -54,7 +53,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
                 ManagerSaveException.class,
                 generateSave(new File("TestFile.txt"))
         );
-
         Assertions.assertEquals("Ошибка чтения файла", exception.getMessage());
     }
 

@@ -1,4 +1,3 @@
-import exceptions.ManagerCheckException;
 import model.Epic;
 import constants.Status;
 import model.SubTask;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 
 public class Main {
 
-    public static void main(String[] args) throws ManagerSaveException, ManagerCheckException {
+    public static void main(String[] args) throws ManagerSaveException {
 
         TaskManager taskManager = Managers.getDefault();
 
@@ -27,23 +26,23 @@ public class Main {
                 Status.NEW,
                 LocalDateTime.of(2024, 5, 10, 11, 0, 1),
                 Duration.ofMinutes(60));
-        Task task3 = new Task("Переработать работу 2",
+        Task task3 = new Task("Переработать работу 3",
                 "Неплохо  неплохо... но еще поработай",
                 Status.NEW,
                 LocalDateTime.of(2024, 5, 10, 11, 0, 1),
                 Duration.ofMinutes(60));
 
-        Task task4 = new Task("Переработать работу 2",
+        Task task4 = new Task("Переработать работу 4",
                 "Неплохо  неплохо... но еще поработай",
                 Status.NEW,
                 LocalDateTime.of(2024, 5, 10, 22, 0, 1),
                 Duration.ofMinutes(60));
-        Task task5 = new Task("Переработать работу 2",
+        Task task5 = new Task("Переработать работу 5",
                 "Неплохо  неплохо... но еще поработай",
                 Status.NEW,
                 LocalDateTime.of(2024, 5, 10, 14, 0, 1),
                 Duration.ofMinutes(60));
-        Task task6 = new Task("Переработать работу 2",
+        Task task6 = new Task("Переработать работу 6",
                 "Неплохо  неплохо... но еще поработай",
                 Status.NEW,
                 LocalDateTime.of(2024, 5, 10, 7, 0, 1),
@@ -86,12 +85,14 @@ public class Main {
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
 
+        System.out.println("Эпик с пустым старттаймом: " + taskManager.getAllEpics());
+
 //Создаем сабтаски для первого эпика
 //String name, String description, Status status,int id, int epicId, LocalDateTime startTime, Duration duration)
         SubTask subTask1 = new SubTask("Сабтаск1 на эпик 1",
                 "Работа плохо проработана  поработай",
                 Status.NEW, epic1.getId(),
-                LocalDateTime.of(2024, 5, 10, 12, 0, 0),
+                LocalDateTime.of(2024, 5, 1, 12, 0, 0),
                 Duration.ofMinutes(60));
 
         SubTask subTask2 = new SubTask("Сабтаск2 на эпик 1",
@@ -100,8 +101,26 @@ public class Main {
                 LocalDateTime.of(2024, 5, 13, 10, 0, 0),
                 Duration.ofMinutes(60));
 
+        SubTask subTask11 = new SubTask("Сабтаск11 на эпик 1",
+                "Неплохо, неплохо... но еще поработай",
+                Status.NEW, epic1.getId(),
+                LocalDateTime.of(2024, 5, 14, 10, 0, 0),
+                Duration.ofMinutes(60));
+
+        taskManager.addSubTask(subTask11);
         taskManager.addSubTask(subTask1);
         taskManager.addSubTask(subTask2);
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println(taskManager.getAllSubTasks());
+
+        System.out.println("Проверяем что дата старта эпика - по самому раннему сабтаску: "
+                + taskManager.getEpicById(epic1.getId()).getStartTime().isEqual(subTask1.getStartTime()) );
+
+        System.out.println();
+        System.out.println();
 
         System.out.println("ПЕЧАТАЕМ ИСТОРИЮ ПРОСМОТРА " + taskManager.getHistory());
         System.out.println();
