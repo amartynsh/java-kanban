@@ -2,28 +2,60 @@ package model;
 
 import constants.Status;
 
-public class Epic extends Task {
-    public Epic(String name, String description) {
-        super(name, description);
-    }
+import java.time.Duration;
+import java.time.LocalDateTime;
 
-    public Epic(String name, String description, Status status, int id) {
-        super(name, description, status, id);
-    }
+public class Epic extends Task {
+    LocalDateTime endTime;
+
 
     public Epic(String name, String description, Status status) {
         super(name, description, status);
+        endTime = null;
     }
 
+    public Epic(String name, String description, int id, Status status) {
+        super(name, description, id, status);
+        endTime = null;
+    }
+
+    public Epic(String name, String description, int id, Status status, LocalDateTime startTime, Duration duration) {
+        super(name, description, id, status, startTime, duration);
+        endTime = null;
+    }
+
+    public Epic(String name, String description, int id, Status status, LocalDateTime startTime, Duration duration,
+                LocalDateTime endTime) {
+        super(name, description, id, status, startTime, duration);
+        this.endTime = endTime;
+    }
+
+    public Epic(String name, String description, Status status, LocalDateTime startTime, Duration duration) {
+        super(name, description, status, startTime, duration);
+        endTime = null;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
     @Override
     public String toString() {
         return "Epic{" +
-                "status=" + status +
-                ", id=" + id +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                '}' + "\n";
+                ", id=" + id +
+                ", status=" + status +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }
+
 

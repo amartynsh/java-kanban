@@ -2,32 +2,30 @@ package service;
 
 import exceptions.ManagerSaveException;
 import model.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.function.Executable;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class FileBackedTaskManagerTest extends InMemoryTaskManagerTest {
+public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     static File file;
-    Task task;
-    Task task2;
+
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEachNew() {
         try {
             file = Files.createTempFile("testStorage", ".txt").toFile();
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка при создании файла");
         }
         taskManager = new FileBackedTaskManager(file);
-        task = new Task("Задача", "Описание задачи");
-        task2 = new Task("Задача2", "Описание задачи2");
     }
 
     //Проверяем создается ли новый менеджер для работы с файлами
@@ -36,8 +34,8 @@ public class FileBackedTaskManagerTest extends InMemoryTaskManagerTest {
         assertNotNull(taskManager, "taskManager не создался");
     }
 
+    // проверяем добавление двух в файл, затем загрузку из файла и сравниваем загруженные таски
     @Test
-        // проверяем добавление двух в файл, затем загрузку из файла и сравниваем загруженные таски
     void checkSaveTasks() {
         taskManager.addTask(task);
         taskManager.addTask(task2);
@@ -47,4 +45,20 @@ public class FileBackedTaskManagerTest extends InMemoryTaskManagerTest {
         assertEquals(task, taskToCompare);
         assertEquals(task2, taskToCompare2);
     }
+
+    //Использование assertThrows по ТЗ
+    @Test
+    public void shouldThrowExceptionForLoadFromFile() {
+        ManagerSaveException exception = Assertions.assertThrows(
+                ManagerSaveException.class,
+                generateSave(new File("TestFile.txt"))
+        );
+        Assertions.assertEquals("Ошибка чтения файла", exception.getMessage());
+    }
+
+    private Executable generateSave(File file) {
+        return () -> FileBackedTaskManager.loadFromFile(file);
+    }
+
+
 }

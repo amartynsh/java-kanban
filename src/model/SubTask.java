@@ -2,19 +2,26 @@ package model;
 
 import constants.Status;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class SubTask extends Task {
     private int epicId;
 
-    public SubTask(String name, String description, int epicId) {
-        super(name, description);
+    public SubTask(String name, String description, Status status, int epicId, LocalDateTime startTime,
+                   Duration duration) {
+        super(name, description, status, startTime, duration);
         this.epicId = epicId;
     }
 
-    public SubTask(String name, String description, Status status, int id, int epicId) {
-        super(name, description, status, id);
+    public SubTask(String name, String description, Status status, int id, int epicId, LocalDateTime startTime,
+                   Duration duration) {
+        super(name, description, id, status, startTime, duration);
         this.epicId = epicId;
     }
 
+
+    /* (name, description, epicId, LocalDateTime, Duration.ofMinutes*/
     public int getEpicId() {
         return epicId;
     }
