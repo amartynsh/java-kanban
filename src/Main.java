@@ -117,7 +117,7 @@ public class Main {
         System.out.println(taskManager.getAllSubTasks());
 
         System.out.println("Проверяем что дата старта эпика - по самому раннему сабтаску: "
-                + taskManager.getEpicById(epic1.getId()).getStartTime().isEqual(subTask1.getStartTime()) );
+                + taskManager.getEpicById(epic1.getId()).getStartTime().isEqual(subTask1.getStartTime()));
 
         System.out.println();
         System.out.println();
