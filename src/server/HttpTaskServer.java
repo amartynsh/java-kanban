@@ -6,7 +6,6 @@ import manager.Managers;
 import server.handlers.*;
 import service.TaskManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -15,7 +14,7 @@ public class HttpTaskServer {
     HttpServer httpServer;
 
     public HttpTaskServer(TaskManager taskManager) throws IOException {
-        int port  = 8080;
+        int port = 8080;
         httpServer = HttpServer.create();
         httpServer.bind(new InetSocketAddress(port), 0);
         httpServer.createContext("/tasks", new TaskHttpHandler(taskManager));
