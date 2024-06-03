@@ -14,10 +14,10 @@ import java.net.InetSocketAddress;
 public class HttpTaskServer {
     private static final File file = new File("taskStorage.txt");
     HttpServer httpServer;
-    int port;
+
 
     public HttpTaskServer(TaskManager taskManager) throws IOException {
-        port = 8080;
+        int port  = 8080;
         httpServer = HttpServer.create();
         httpServer.bind(new InetSocketAddress(port), 0);
         httpServer.createContext("/tasks", new TaskHttpHandler(taskManager));
@@ -29,7 +29,7 @@ public class HttpTaskServer {
 
     public void start() {
         httpServer.start();
-        System.out.println("Server started at port: " + port);
+        System.out.println("Server started at port: 8080");
     }
 
     public void stop() {
@@ -37,7 +37,7 @@ public class HttpTaskServer {
     }
 
     public static void main(String[] args) throws ManagerSaveException, IOException {
-        TaskManager taskManager = Managers.getFileTaskManager(file);
+        TaskManager taskManager = Managers.getDefault();
         HttpTaskServer restServer = new HttpTaskServer(taskManager);
 
         // запускаем сервер
