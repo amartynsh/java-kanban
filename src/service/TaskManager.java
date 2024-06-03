@@ -47,6 +47,6 @@ public interface TaskManager {
 
     void dellAllSubTasks();
 
-    List <Task> getPrioritizedTask();
+    List<Task> getPrioritizedTask();
 
 }
