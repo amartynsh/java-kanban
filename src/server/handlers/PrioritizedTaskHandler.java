@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import service.TaskManager;
 import java.io.IOException;
 
-public class PrioritizedTaskHandler extends BaseHttpHandler{
+public class PrioritizedTaskHandler extends BaseHttpHandler {
     public PrioritizedTaskHandler(TaskManager manager) {
         super(manager);
     }
