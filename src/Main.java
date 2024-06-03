@@ -1,19 +1,22 @@
+import manager.Managers;
 import model.Epic;
 import constants.Status;
 import model.SubTask;
 import model.Task;
-import manager.Managers;
+import service.FileBackedTaskManager;
 import service.TaskManager;
-import exceptions.ManagerSaveException;
 
+import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class Main {
-
-    public static void main(String[] args) throws ManagerSaveException {
+public class Main{
+    private static final File file = new File("taskStorage.txt");
+    public static void main(String[] args)  {
 
         TaskManager taskManager = Managers.getDefault();
+
+
 
         Task task1 = new Task("Доработать работу 1",
                 "Работа плохо проработана  поработай",
@@ -29,7 +32,7 @@ public class Main {
         Task task3 = new Task("Переработать работу 3",
                 "Неплохо  неплохо... но еще поработай",
                 Status.NEW,
-                LocalDateTime.of(2024, 5, 10, 11, 0, 1),
+                LocalDateTime.of(2022, 5, 10, 11, 0, 1),
                 Duration.ofMinutes(60));
 
         Task task4 = new Task("Переработать работу 4",
@@ -96,13 +99,13 @@ public class Main {
                 Duration.ofMinutes(60));
 
         SubTask subTask2 = new SubTask("Сабтаск2 на эпик 1",
-                "Неплохо, неплохо... но еще поработай",
+                "Неплохо  неплохо... но еще поработай",
                 Status.NEW, epic1.getId(),
                 LocalDateTime.of(2024, 5, 13, 10, 0, 0),
                 Duration.ofMinutes(60));
 
         SubTask subTask11 = new SubTask("Сабтаск11 на эпик 1",
-                "Неплохо, неплохо... но еще поработай",
+                "Неплохо  неплохо... но еще поработай",
                 Status.NEW, epic1.getId(),
                 LocalDateTime.of(2024, 5, 14, 10, 0, 0),
                 Duration.ofMinutes(60));
@@ -131,12 +134,12 @@ public class Main {
         SubTask subTask3 = new SubTask("Сабтаск1 на эпик 2",
                 "Нужно очень многоработать",
                 Status.NEW, epic2.getId(),
-                LocalDateTime.of(2024, 5, 10, 10, 0, 0),
+                LocalDateTime.of(2022, 5, 10, 10, 0, 0),
                 Duration.ofMinutes(60));
         taskManager.addSubTask(subTask3);
         SubTask subTask10 = new SubTask("Сабтаск2 на эпик 2", "Нужно очень многоработать",
                 Status.NEW, epic2.getId(),
-                LocalDateTime.of(2024, 5, 10, 10, 0, 0),
+                LocalDateTime.of(2023, 5, 10, 10, 0, 0),
                 Duration.ofMinutes(60));
         taskManager.addSubTask(subTask10);
 

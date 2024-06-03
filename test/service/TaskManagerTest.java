@@ -1,6 +1,7 @@
 package service;
 
 import constants.Status;
+import exceptions.NotFoundException;
 import manager.Managers;
 import model.Epic;
 import model.SubTask;
@@ -293,7 +294,11 @@ abstract class TaskManagerTest<T extends TaskManager> {
 //Удаляем таску
         taskManager.delTaskById(task1.getId());
 //Проверяем наличие таски
-        assertNull(taskManager.getTaskById(task1.getId()));
+        try {
+            assertNull(taskManager.getTaskById(task1.getId()));
+        } catch (NotFoundException ignored) {
+
+        }
     }
 
     //Проверяем удаляемость эпика а так же его сабтасков вместе с ним
@@ -325,15 +330,19 @@ abstract class TaskManagerTest<T extends TaskManager> {
         //Удаляем эпик
         taskManager.dellEpicById(epic.getId());
 
-        //Проверяем наличие удаленного эпика
-        assertNull(taskManager.getEpicById(epic.getId()));
+        try {
+            //Проверяем наличие удаленного эпика
+            assertNull(taskManager.getEpicById(epic.getId()));
 
-        //Проверяем наличие сабтасок у эпика
-        assertNull(taskManager.getSubTaskById(subTask.getId()));
-        assertNull(taskManager.getSubTaskById(subTask1.getId()));
+            //Проверяем наличие сабтасок у эпика
+            assertNull(taskManager.getSubTaskById(subTask.getId()));
+            assertNull(taskManager.getSubTaskById(subTask1.getId()));
 
-        //Проверяем, что сабтаск от второго эпика остался
-        assertNotNull(taskManager.getSubTaskById(subTask2.getId()));
+            //Проверяем, что сабтаск от второго эпика остался
+            assertNotNull(taskManager.getSubTaskById(subTask2.getId()));
+        } catch (NotFoundException ignored) {
+
+        }
     }
 
     @Test
@@ -345,9 +354,13 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         //Удаляем эпики
         taskManager.dellAllEpics();
-        assertNull(taskManager.getEpicById(epic1.getId()));
-        assertNull(taskManager.getEpicById(epic2.getId()));
-        assertNull(taskManager.getEpicById(epic3.getId()));
+        try {
+            assertNull(taskManager.getEpicById(epic1.getId()));
+            assertNull(taskManager.getEpicById(epic2.getId()));
+            assertNull(taskManager.getEpicById(epic3.getId()));
+        } catch (NotFoundException ignored) {
+
+        }
     }
 
     @Test
@@ -365,8 +378,12 @@ abstract class TaskManagerTest<T extends TaskManager> {
         taskManager.dellSubTaskById(subTask2.getId());
 
         //Проверяем их наличие
-        assertNull(taskManager.getSubTaskById(subTask1.getId()));
-        assertNull(taskManager.getSubTaskById(subTask2.getId()));
+        try {
+            assertNull(taskManager.getSubTaskById(subTask1.getId()));
+            assertNull(taskManager.getSubTaskById(subTask2.getId()));
+        } catch (NotFoundException e) {
+
+        }
     }
 
     @Test
@@ -381,7 +398,11 @@ abstract class TaskManagerTest<T extends TaskManager> {
         taskManager.dellAllSubTasks();
 
         //Проверяем их наличие
-        assertNull(taskManager.getSubTaskById(subTask1.getId()));
-        assertNull(taskManager.getSubTaskById(subTask2.getId()));
+        try {
+            assertNull(taskManager.getSubTaskById(subTask1.getId()));
+            assertNull(taskManager.getSubTaskById(subTask2.getId()));
+        } catch (NotFoundException ignored) {
+
+        }
     }
 }

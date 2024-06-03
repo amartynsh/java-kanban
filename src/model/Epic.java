@@ -21,7 +21,7 @@ public class Epic extends Task {
 
     public Epic(String name, String description, int id, Status status, LocalDateTime startTime, Duration duration) {
         super(name, description, id, status, startTime, duration);
-        endTime = null;
+        endTime = getEndTime();
     }
 
     public Epic(String name, String description, int id, Status status, LocalDateTime startTime, Duration duration,
@@ -34,6 +34,7 @@ public class Epic extends Task {
         super(name, description, status, startTime, duration);
         endTime = null;
     }
+
 
     @Override
     public LocalDateTime getEndTime() {
