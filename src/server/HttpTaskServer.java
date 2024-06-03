@@ -12,9 +12,7 @@ import java.net.InetSocketAddress;
 
 
 public class HttpTaskServer {
-    private static final File file = new File("taskStorage.txt");
     HttpServer httpServer;
-
 
     public HttpTaskServer(TaskManager taskManager) throws IOException {
         int port  = 8080;
