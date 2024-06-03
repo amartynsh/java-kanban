@@ -14,11 +14,9 @@ import java.net.InetSocketAddress;
 public class HttpTaskServer {
     private static final File file = new File("taskStorage.txt");
     HttpServer httpServer;
-    int PORT;
+    int PORT = 8080;
 
     public HttpTaskServer(TaskManager taskManager) throws IOException {
-
-        PORT = 8080;
         httpServer = HttpServer.create();
         httpServer.bind(new InetSocketAddress(PORT), 0);
         httpServer.createContext("/tasks", new TaskHttpHandler(taskManager));
