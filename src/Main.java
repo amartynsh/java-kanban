@@ -13,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
 
         TaskManager taskManager = Managers.getDefault();
-        
         Task task1 = new Task("Доработать работу 1",
                 "Работа плохо проработана  поработай",
                 Status.NEW,
