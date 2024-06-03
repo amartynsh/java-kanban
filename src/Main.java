@@ -3,21 +3,17 @@ import model.Epic;
 import constants.Status;
 import model.SubTask;
 import model.Task;
-import service.FileBackedTaskManager;
 import service.TaskManager;
 
-import java.io.File;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class Main{
-    private static final File file = new File("taskStorage.txt");
-    public static void main(String[] args)  {
+public class Main {
+    public static void main(String[] args) {
 
         TaskManager taskManager = Managers.getDefault();
-
-
-
+        
         Task task1 = new Task("Доработать работу 1",
                 "Работа плохо проработана  поработай",
                 Status.NEW,
