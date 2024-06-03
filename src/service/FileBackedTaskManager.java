@@ -165,13 +165,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String taskString = "";
         StringBuilder builder = new StringBuilder();
 
-        builder.append(id).append(",").
-                append(taskType).append(",").
-                append(name).append(",").
-                append(status).append(",").
-                append(description).append(",").
-                append(startTime).append(",").
-                append(duration).append(",");
+        builder.append(id).append(",")
+                .append(taskType).append(",")
+                .append(name).append(",")
+                .append(status).append(",")
+                .append(description).append(",")
+                .append(startTime).append(",")
+                .append(duration).append(",");
 
         if (task.getClass().equals(Task.class)) {
             builder.append("\n");
