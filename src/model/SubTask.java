@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class SubTask extends Task {
-    private int epicId;
+    protected int epicId;
 
     public SubTask(String name, String description, Status status, int epicId, LocalDateTime startTime,
                    Duration duration) {
@@ -19,7 +19,6 @@ public class SubTask extends Task {
         super(name, description, id, status, startTime, duration);
         this.epicId = epicId;
     }
-
 
     /* (name, description, epicId, LocalDateTime, Duration.ofMinutes*/
     public int getEpicId() {

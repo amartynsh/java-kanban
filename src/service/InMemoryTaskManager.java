@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import exceptions.NotFoundException;
+import exceptions.TimeCrossingException;
 import model.Epic;
 import constants.Status;
 import manager.Managers;
@@ -35,6 +37,8 @@ public class InMemoryTaskManager implements TaskManager {
             task.setId(tempId);
             tasks.put(tempId, task);
             sortTasksListAdd(task);
+        } else {
+            throw new TimeCrossingException("задача пересекается по времени с другой");
         }
     }
 
@@ -55,11 +59,16 @@ public class InMemoryTaskManager implements TaskManager {
             updateEpicStatus(subTask.getEpicId());
             calcEpicTimesAndDuration(subTask.getEpicId());
             sortTasksListAdd(subTask);
+        } else {
+            throw new TimeCrossingException("задача пересекается по времени с другой");
         }
     }
 
     @Override
     public SubTask getSubTaskById(int idSubTask) {
+        if (!subTasks.containsKey(idSubTask)) {
+            throw new NotFoundException("задача" + idSubTask + " не найдена");
+        }
         SubTask subTask = subTasks.get(idSubTask);
         historyManager.add(subTask);
         return subTask;
@@ -67,6 +76,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int idTask) {
+        if (!tasks.containsKey(idTask)) {
+            throw new NotFoundException("задача" + idTask + " не найдена");
+        }
         Task task = tasks.get(idTask);
         historyManager.add(task);
         return task;
@@ -83,6 +95,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic getEpicById(int idEpic) {
+        if (!epics.containsKey(idEpic)) {
+            throw new NotFoundException("задача" + idEpic + " не найдена");
+        }
         Epic epic = epics.get(idEpic);
         historyManager.add(epic);
         return epic;
@@ -326,5 +341,10 @@ public class InMemoryTaskManager implements TaskManager {
         if (task.getStartTime() != null) {
             sortedTasks.remove(task);
         }
+    }
+
+    @Override
+    public List<Task> getPrioritizedTask() {
+        return new ArrayList<>(sortedTasks);
     }
 }
